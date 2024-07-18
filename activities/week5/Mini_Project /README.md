@@ -13,7 +13,11 @@ Sparkify should use the Data Warehouse Snowflake as their new data host because 
 
 ---
 ## Database Schema & ETL Pipeline
-State and justify your database schema design and ETL pipeline.
+The ETL pipeline starts by extracting raw data from Amazon S3. Using Databricks, Spark allows us to read JSON files directly from the public S3 bucket. Once this raw data has been validated, the pipeline continues onto transforming the data. Within Databricks, the raw data is processed into five new tables (songs_table, user_table, time_table, artists_table and songplays_table). This transformed data is written back to S3 in a new bucket. This data is then loaded into Snowflake in their respective tables.
+
+The final database schema for Sparkify is a star schema within Snowflake. This schema optimizes performance by simplifying queries, controlling data redundancy, simplifying ETL processes, and being a scalable option. The structure of the star schema allows users to easily join the fact table with the dimension tables using primary key and foreign key relationships. This structure is also extremely scalable because adding new dimension tables is an easy way to support growing data. In any database there is bound to be data redundancy, but with a star schema the redundancy is controlled and purposeful. 
+
+
 
 ---
 ## Overall Process
