@@ -195,7 +195,7 @@ FROM TECHCATALYST_DE.GMASTRORILLI.SONGPLAYS_FACT;
 
 ---
 ## Reference Architecture Diagram
-![Reference Architecture Diagram](images/mini_project_RAD.JPG)
+![Reference Architecture Diagram](images/RAD.JPG)
 
 ---
 ## Sparkify's use of Data Lake & Data Warehouse
