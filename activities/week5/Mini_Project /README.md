@@ -1,5 +1,13 @@
 # Sparkify Mini Project
 #### Ginamarie Mastrorilli
+
+* [Project Description](#ProjectDescription)
+* [Reference Architecture Diagram](####Reference-Architecture-Diagram)
+* [Sparkify's use of Data Lake & Data Warehouse](#Sparkify's-use-of-Data-Lake-&-Data-Warehouse)
+* [Database Schema & ETL Pipeline](#Database-Schema-&-ETL-Pipeline)
+* [Overall Process](#Overall-Process)
+* [Snowflake DDL Scripts](#Snowflake-DDL-Scripts)
+
 ---
 #### Project Description
 The music streaming startup, Sparkify, needs to move their processes and data onto the cloud. As their data engineer, I am tasked with building and ETL pipeline. The pipeline will extract the raw data from S3, transform the data in Databricks using Spark, stage the data in S3 and finally load into Snowflake. 
