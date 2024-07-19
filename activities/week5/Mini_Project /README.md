@@ -1,35 +1,21 @@
 # Sparkify Mini Project
 #### Ginamarie Mastrorilli
-
-* [Project Description](#ProjectDescription)
-* [Reference Architecture Diagram](####Reference-Architecture-Diagram)
-* [Sparkify's use of Data Lake & Data Warehouse](#Sparkify's-use-of-Data-Lake-&-Data-Warehouse)
-* [Database Schema & ETL Pipeline](#Database-Schema-&-ETL-Pipeline)
-* [Overall Process](#Overall-Process)
-* [Snowflake DDL Scripts](#Snowflake-DDL-Scripts)
-
 ---
 #### Project Description
 The music streaming startup, Sparkify, needs to move their processes and data onto the cloud. As their data engineer, I am tasked with building and ETL pipeline. The pipeline will extract the raw data from S3, transform the data in Databricks using Spark, stage the data in S3 and finally load into Snowflake. 
 
 ## Reference Architecture Diagram
 ![Reference Architecture Diagram](images/RAD.JPG)
-
 ---
 ## Sparkify's use of Data Lake & Data Warehouse
 Sparkify can leverage the AWS S3 Data Lake by extracting the raw data from a bucket on S3. AWS S3 is a cost-effective and scalable data storage option for a startup company. Sparkify can also leverage S3 as a staging area after the raw data has been transformed in Databricks but before migrating to Snowflake. Even though Sparkify could store data in Databricks and connect to Snowflake, the more cost-effective option, which does not add a significant workload, is to stage the data in S3 and then connect to Snowflake. 
 
 Sparkify should use the Data Warehouse Snowflake as their new data host because it is a cloud based data warehouse that is scalable and provides analytical capabilities. As a startup, Snowflake is a good option becuase of the built in security and because it is a Software as a Service. Even though Snowflake is costly, it will save on significant IT investments and provides complete data warehousing solutions. 
-
-
 ---
 ## Database Schema & ETL Pipeline
 The ETL pipeline starts by extracting raw data from Amazon S3. Using Databricks, Spark allows us to read JSON files directly from the public S3 bucket. Once this raw data has been validated, the pipeline continues onto transforming the data. Within Databricks, the raw data is processed into five new tables (songs_table, user_table, time_table, artists_table and songplays_table). This transformed data is written back to S3 in a new bucket. This data is then loaded into Snowflake in their respective tables.
 
 The final database schema for Sparkify is a star schema within Snowflake. This schema optimizes performance by simplifying queries, controlling data redundancy, simplifying ETL processes, and being a scalable option. The structure of the star schema allows users to easily join the fact table with the dimension tables using primary key and foreign key relationships. This structure is also extremely scalable because adding new dimension tables is an easy way to support growing data. In any database there is bound to be data redundancy, but with a star schema the redundancy is controlled and purposeful. 
-
-
-
 ---
 ## Overall Process
 
@@ -44,7 +30,6 @@ The creation of time_table also occured during the processing of the log data. T
 The final table created in databricks/Spark is the songplays_table. This table relies first on a join between the song data (df) and log data (df_log). I used a right join from df to df_log on the duration column from df and the length column from df_log. Since there was no matching ID column, I assumed duration/length would be the next best option because probabilty that any two songs have the exact same length is very low. I then created a new column 'songplay_id' by assigning a unique value to each row in this table. Next, I filtered the column 'page' to only show the value 'NextSong'. Finally, the songplays_table was created by selecting the following columns: "songplay_id", "ts", "year", "month", "userID",  "level", "song_id", "artist_id", "sessionID", "userAgent".
 
 Now that all of the transformed data is in the S3 staging area, I moved to migrating the data from S3 to Snowflake. I first created an external stage (GM_STAGE) to establish a relationship between Snowflake to the S3 bucket. I also created a new file format (GMASTRORILLI_parquet_format) to successfully read in the parquet files. Finally, I used the Snowflake DDL scripts (below) to create the tables in snowflake that follow a star schema.
-
 ---
 ## Snowflake DDL Scripts
 
@@ -126,9 +111,7 @@ MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE;
 SELECT *
 FROM TECHCATALYST_DE.GMASTRORILLI.USERS_DIM;
 ```
-
 #### Creating ARTISTS_DIM Table
-
 ```sql
 -- check schema from S3 artists_table
 SELECT *
@@ -159,16 +142,13 @@ SELECT *
 FROM TECHCATALYST_DE.GMASTRORILLI.ARTISTS_DIM;
 
 ```
-
 #### Creating TIME_DIM Table
-
 ```sql
 -- check schema for S3 time_table
 SELECT *
 FROM TABLE(
  INFER_SCHEMA(LOCATION=>'@TECHCATALYST_DE.EXTERNAL_STAGE.GM_STAGE/dw_stage/gina/time_table/',
  FILE_FORMAT=>'GMASTRORILLI_parquet_format'));
-
 
 -- create TIME_DIM
 CREATE OR REPLACE TRANSIENT TABLE TECHCATALYST_DE.GMASTRORILLI.TIME_DIM (
