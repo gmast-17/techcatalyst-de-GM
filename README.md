@@ -24,12 +24,6 @@
 * SQL
 * Snowflake
 
-To visit Google you can just [Click Me](https://google.com).
-
-
-![myfavimage](https://m.media-amazon.com/images/M/MV5BODI4NzMyNjE0MF5BMl5BanBnXkFtZTgwMTcwNzI0MzE@._V1_FMjpg_UX1000_.jpg)
-
-
 --- 
 
 ### Topic 4: Advanced Snowflake  
