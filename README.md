@@ -32,7 +32,7 @@
 ---
 ### Topic 5: Building Data Engineering Pipelines
 * ETL Pipelines
-
+* boto3
 
 ---
 ### Topic 6: DevOps, DataOps, MLOps & LLMOps
